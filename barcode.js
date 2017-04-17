@@ -41,14 +41,24 @@ module.exports = function (bar, callback) {
 
 				}
 
-				var day   = string(onlyDigits).left(27).right(2);
-				var month = string(onlyDigits).left(25).right(2);
-				var year  = string(onlyDigits).left(23).right(4);
-
-
 				value = string(onlyDigits).left(15).right(10);
-				date = day +"/"+month+"/"+year;
 				
+
+				try {
+
+					var day   = string(onlyDigits).left(27).right(2);
+					var month = string(onlyDigits).left(25).right(2);
+					var year  = string(onlyDigits).left(23).right(4);
+
+
+					date = day +"/"+month+"/"+year;
+
+
+				}
+				catch(error){
+					console.log("Error extracting date");
+				}
+
 
 			}
 			else {
@@ -58,17 +68,25 @@ module.exports = function (bar, callback) {
 				var msinDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
 				
 				value = string(onlyDigits).left(19).right(10);
-				date = string(onlyDigits).left(9).right(4);
-
-				date = Number(date) + 10142;
-				var dt = new Date();
-				dt.setTime(date*msinDay);
-
-				var day = dt.getDate();
-				var month = Number(dt.getMonth())+1;
-				var year = dt.getFullYear();
 				
-				date = day+"/"+month+"/"+year;
+				try {
+
+					date = string(onlyDigits).left(9).right(4);
+
+					date = Number(date) + 10142;
+					var dt = new Date();
+					dt.setTime(date*msinDay);
+
+					var day = dt.getDate();
+					var month = Number(dt.getMonth())+1;
+					var year = dt.getFullYear();
+					
+					date = day+"/"+month+"/"+year;
+
+				}
+				catch(error){
+					console.log("Error extracting date");
+				}
 				
 			}
 			
